@@ -66,7 +66,7 @@ bot.on(message('voice'), async ctx => {
             content: response
         });
 
-        await ctx.reply('Відповідь: ' + response.content.trim()); // print answer
+        await ctx.reply('Відповідь: ' + response.trim()); // print answer
     } catch (error) {
         console.warn('Voice Bot Error: ', error.message); // print error
     }
