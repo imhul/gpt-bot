@@ -23,7 +23,7 @@ bot.command('new', async ctx => {
 
 bot.on(message('text'), async ctx => {
     ctx.session ??= INIT_SESSION;
-    ctx.reply(JSON.stringify(ctx.message.text, null, 2)); // as console.log
+    // ctx.reply(JSON.stringify(ctx.message.text, null, 2)); // as console.log
 
     try {
         await ctx.reply(code('Дай но подумать...'));
@@ -56,6 +56,7 @@ bot.on(message('voice'), async ctx => {
         const oggPath = await ogg.convert(fileLink.href, userID);
         const mp3path = await ogg.toMp3(oggPath, userID);
         const text = await ai.voiceReader(mp3path);
+        console.info('text: ', text);
         await ctx.reply('question: ' + code(text)); // question
         ctx.session.messages.push({ role: ai.roles.USER, content: text });
         const response = await ai.chat(ctx.session.messages);
