@@ -54,8 +54,7 @@ bot.on(message('voice'), async ctx => {
         const oggPath = await ogg.convert(fileLink.href, userID);
         const mp3path = await ogg.toMp3(oggPath, userID);
         const text = await ai.voiceReader(mp3path);
-        console.info('text: ', text);
-        await ctx.reply(`question: ${code(text)}`); // question
+        await ctx.reply(code(`question: ${text}`)); // question
         ctx.session.messages.push({ role: ai.roles.USER, content: text });
         const response = await ai.chat(ctx.session.messages);
         ctx.session.messages.push({
