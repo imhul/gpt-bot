@@ -8,8 +8,8 @@ import ai from './utils/ai.js';
 const gptBotToken = process.env.HEROKU_BOT_TOKEN;
 const INIT_SESSION = { messages: [] };
 const bot = new Telegraf(gptBotToken);
-const port = process.env.PORT; // Використовувати змінну оточення $PORT, або 3000, якщо вона не встановлена
-bot.startWebhook('/path', null, port);
+const port = process.env.PORT || 3000; // Використовувати змінну оточення $PORT, або 3000, якщо вона не встановлена
+bot.startWebhook('/https://gpt-tg-voice-helper.herokuapp.com/', null, port);
 bot.use(session());
 
 bot.command('start', async ctx => {
@@ -76,4 +76,4 @@ bot.on(message('voice'), async ctx => {
 bot.launch();
 process.once('SIGINT', () => bot.stop('SIGINT'));
 process.once('SIGTERM', () => bot.stop('SIGTERM'));
-process.once('SIGKILL', () => bot.stop('SIGKILL'));
+// process.once('SIGKILL', () => bot.stop('SIGKILL'));
