@@ -21,9 +21,8 @@ class AI {
         try {
             console.info('chat messages: ', messages);
 
-            const response = await this.openai.createCompletion({
-                model: 'gpt-3.5-turbo',
-                prompt: messages
+            const response = await this.openai.createChatCompletion(messages, {
+                model: 'gpt-3.5-turbo'
             });
 
             console.info('chat response: ', response);
