@@ -7,7 +7,9 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "log": "heroku logs --tail --app=gpt-tg-voice-helper",
-    "go": "nodemon index.js"
+    "go": "nodemon index.js",
+    "dev": "yarn go",
+    "start": "node index.js"
   },
   "keywords": [
     "chatgpt",
