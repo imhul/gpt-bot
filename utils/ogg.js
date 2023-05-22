@@ -5,7 +5,7 @@ import { fileURLToPath } from 'url';
 import ffmpeg from 'fluent-ffmpeg';
 import installer from '@ffmpeg-installer/ffmpeg';
 // utils
-import { clear } from './clear';
+import { clear } from './clear.js';
 
 const DIRECT = dirname(fileURLToPath(import.meta.url));
 

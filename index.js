@@ -2,12 +2,16 @@ import { Telegraf, session } from 'telegraf';
 import { message } from 'telegraf/filters';
 import { code } from 'telegraf/format';
 // utils
-import { env } from './utils/config';
-import ogg from './utils/ogg';
-import ai from './utils/ai';
+import ogg from './utils/ogg.js';
+import ai from './utils/ai.js';
 
+const gptBotToken = process.env.HEROKU_BOT_TOKEN;
+const gptKey = process.env.HEROKU_BOT_KEY;
+
+console.info('gptBotToken: ', gptBotToken);
+console.info('gptKey: ', gptKey);
 const INIT_SESSION = { messages: [] };
-const bot = new Telegraf(env.gptBotToken);
+const bot = new Telegraf(gptBotToken);
 bot.use(session());
 
 bot.command('start', async ctx => {
@@ -51,7 +55,7 @@ bot.on(message('voice'), async ctx => {
             ctx.message.voice.file_id
         );
         const userID = String(ctx.message.from.id);
-        // console.log('userID: ', userID);
+        // console.info('userID: ', userID);
         const oggPath = await ogg.convert(fileLink.href, userID);
         const mp3path = await ogg.toMp3(oggPath, userID);
         const text = await ai.voiceReader(mp3path);
