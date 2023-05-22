@@ -63,7 +63,7 @@ bot.on(message('voice'), async ctx => {
 
         ctx.session.messages.push({
             role: ai.roles.ASSISTENT,
-            content: response.content
+            content: response
         });
 
         await ctx.reply('Відповідь: ' + response.content.trim()); // print answer

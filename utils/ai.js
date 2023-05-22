@@ -19,14 +19,14 @@ class AI {
 
     async chat(messages) {
         try {
-            const response = await this.openai.createChatCompletion({
+            const response = await this.openai.createCompletion({
                 model: 'gpt-3.5-turbo',
                 messages: messages,
                 temperature: 0.2,
                 max_tokens: 16 + messages.length * 2,
             });
 
-            return response.data.choices[0].message;
+            return response.data.choices[0].text;
         } catch (error) {
             console.info('AI Chat Error: ', error.message);
         }
