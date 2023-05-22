@@ -56,16 +56,16 @@ bot.on(message('voice'), async ctx => {
         const oggPath = await ogg.convert(fileLink.href, userID);
         const mp3path = await ogg.toMp3(oggPath, userID);
         const text = await ai.voiceReader(mp3path);
-        await ctx.reply(code(text)); // question
+        await ctx.reply('question: ' + code(text)); // question
         ctx.session.messages.push({ role: ai.roles.USER, content: text });
         const response = await ai.chat(ctx.session.messages);
         ctx.session.messages.push({
             role: ai.roles.ASSISTENT,
             content: response.content
         });
-        ctx.reply(response.content);
+        await ctx.reply('response' + response.content);
     } catch (error) {
-        ctx.reply('Voice Bot Error: ' + error.message);
+        await ctx.reply('Voice Bot Error: ' + error.message);
     }
 });
 

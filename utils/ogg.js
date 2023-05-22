@@ -33,6 +33,29 @@ class OggConverter {
         }
     }
 
+    // async convert(url, filename) {
+    //     try {
+    //         const oggPath = resolve(DIRECT, '../ogg', `${filename}.ogg`);
+    //         const response = await request(url, {
+    //             method: 'GET',
+    //             body: undefined,
+    //             headers: {
+    //                 'Content-Type': 'application/json',
+    //                 Accept: 'application/json'
+    //             },
+    //             responseType: 'stream'
+    //         });
+
+    //         return new Promise((resolve, reject) => {
+    //             const stream = response.data.pipe(createWriteStream(oggPath));
+    //             stream.on('finish', () => resolve(oggPath));
+    //             stream.on('error', error => reject(error.message));
+    //         });
+    //     } catch (error) {
+    //         console.info('Method: convert, Converter Error: ' + error.message);
+    //     }
+    // }
+
     async convert(url, filename) {
         try {
             const oggPath = resolve(DIRECT, '../ogg', `${filename}.ogg`);
@@ -47,9 +70,13 @@ class OggConverter {
             });
 
             return new Promise((resolve, reject) => {
-                const stream = response.data.pipe(createWriteStream(oggPath));
-                stream.on('finish', () => resolve(oggPath));
-                stream.on('error', error => reject(error.message));
+                const stream = response.body; // Отримуємо тіло відповіді
+                const fileStream = createWriteStream(oggPath);
+
+                stream.pipe(fileStream);
+
+                fileStream.on('finish', () => resolve(oggPath));
+                fileStream.on('error', error => reject(error.message));
             });
         } catch (error) {
             console.info('Method: convert, Converter Error: ' + error.message);
