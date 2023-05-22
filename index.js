@@ -59,17 +59,19 @@ bot.on(message('voice'), async ctx => {
         await ctx.reply(code(`Ваше запитання: ${text}`)); // question
         ctx.session.messages.push({ role: ai.roles.USER, content: text });
         const response = await ai.chat(ctx.session.messages);
-        ctx.reply(JSON.stringify(response, null, 2));
+        console.info('response: ', response);
+        ctx.reply(JSON.stringify(response));
         ctx.session.messages.push({
             role: ai.roles.ASSISTENT,
             content: response.content
         });
         await ctx.reply('Відповідь' + response.content);
     } catch (error) {
-        await ctx.reply('Voice Bot Error: ' + error.message);
+        await ctx.reply(code('Voice Bot Error: ' + error.message));
     }
 });
 
 bot.launch();
 process.once('SIGINT', () => bot.stop('SIGINT'));
 process.once('SIGTERM', () => bot.stop('SIGTERM'));
+process.once('SIGKILL', () => bot.stop('SIGKILL'));
