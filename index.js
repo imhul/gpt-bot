@@ -21,6 +21,7 @@ bot.command('new', async ctx => {
 });
 
 bot.on(message('text'), async ctx => {
+    console.info('on text event');
     ctx.session ??= INIT_SESSION;
     // ctx.reply(JSON.stringify(ctx.message.text, null, 2)); // as console.log
 
@@ -42,6 +43,7 @@ bot.on(message('text'), async ctx => {
 });
 
 bot.on(message('voice'), async ctx => {
+    console.info('on voice event');
     ctx.session ??= INIT_SESSION;
     ctx.reply(JSON.stringify(ctx.message.voice, null, 2)); // as console.log
 
@@ -54,14 +56,14 @@ bot.on(message('voice'), async ctx => {
         const oggPath = await ogg.convert(fileLink.href, userID);
         const mp3path = await ogg.toMp3(oggPath, userID);
         const text = await ai.voiceReader(mp3path);
-        await ctx.reply(code(`question: ${text}`)); // question
+        await ctx.reply(code(`Ваше запитання: ${text}`)); // question
         ctx.session.messages.push({ role: ai.roles.USER, content: text });
         const response = await ai.chat(ctx.session.messages);
         ctx.session.messages.push({
             role: ai.roles.ASSISTENT,
             content: response.content
         });
-        await ctx.reply('response' + response.content);
+        await ctx.reply('Відповідь' + response.content);
     } catch (error) {
         await ctx.reply('Voice Bot Error: ' + error.message);
     }
