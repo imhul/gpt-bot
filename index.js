@@ -78,3 +78,8 @@ bot.launch();
 process.once('SIGINT', () => bot.stop('SIGINT'));
 process.once('SIGTERM', () => bot.stop('SIGTERM'));
 // process.once('SIGKILL', () => bot.stop('SIGKILL'));
+
+return {
+    statusCode: 200,
+    body: JSON.stringify({ message: 'Hello!' }),
+}
