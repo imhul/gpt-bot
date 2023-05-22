@@ -60,7 +60,7 @@ bot.on(message('voice'), async ctx => {
         ctx.session.messages.push({ role: ai.roles.USER, content: text });
         const response = await ai.chat(ctx.session.messages);
         console.info('response: ', response);
-        ctx.reply(JSON.stringify(response));
+        await ctx.reply(code(JSON.stringify(response)));
         ctx.session.messages.push({
             role: ai.roles.ASSISTENT,
             content: response.content
