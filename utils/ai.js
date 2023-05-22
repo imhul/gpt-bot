@@ -23,6 +23,7 @@ class AI {
                 model: 'gpt-3.5-turbo',
                 messages: messages,
                 temperature: 0.2,
+                max_tokens: 150,
             });
 
             return response.data.choices[0].message;
