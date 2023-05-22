@@ -8,8 +8,8 @@ import ai from './utils/ai.js';
 const gptBotToken = process.env.HEROKU_BOT_TOKEN;
 const INIT_SESSION = { messages: [] };
 const bot = new Telegraf(gptBotToken);
-const port = process.env.PORT || 3000;
-bot.startWebhook('https://gpt-tg-voice-helper.herokuapp.com/tgbot', null, port);
+// const port = process.env.PORT || 3000;
+// bot.startWebhook('https://gpt-tg-voice-helper.herokuapp.com/tgbot', null, port);
 bot.use(session());
 
 bot.command('start', async ctx => {
