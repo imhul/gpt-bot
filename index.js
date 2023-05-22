@@ -8,7 +8,7 @@ import ai from './utils/ai.js';
 const gptBotToken = process.env.HEROKU_BOT_TOKEN;
 const INIT_SESSION = { messages: [] };
 const bot = new Telegraf(gptBotToken);
-const port = process.env.PORT || 3000; // Використовувати змінну оточення $PORT, або 3000, якщо вона не встановлена
+const port = process.env.PORT || 3000;
 bot.startWebhook('https://gpt-tg-voice-helper.herokuapp.com/tgbot', null, port);
 bot.use(session());
 
@@ -25,7 +25,6 @@ bot.command('new', async ctx => {
 bot.on(message('text'), async ctx => {
     console.info('on text event');
     ctx.session ??= INIT_SESSION;
-    // ctx.reply(JSON.stringify(ctx.message.text, null, 2)); // as console.log
 
     try {
         await ctx.reply(code('Дай но подумать...'));
@@ -47,7 +46,6 @@ bot.on(message('text'), async ctx => {
 bot.on(message('voice'), async ctx => {
     console.info('on voice event');
     ctx.session ??= INIT_SESSION;
-    // ctx.reply(JSON.stringify(ctx.message.voice, null, 2)); // as console.log
 
     try {
         await ctx.reply(code('Дай но подумать...'));
@@ -58,19 +56,19 @@ bot.on(message('voice'), async ctx => {
         const oggPath = await ogg.convert(fileLink.href, userID);
         const mp3path = await ogg.toMp3(oggPath, userID);
         const text = await ai.voiceReader(mp3path);
-        await ctx.reply(code(`Ваше запитання: ${text}`)); // question
+        await ctx.reply(code('Ще трохи...'));
+        // await ctx.reply(code(`Ваше запитання: ${text}`)); // print question
         ctx.session.messages.push({ role: ai.roles.USER, content: text });
-        // console.info('ctx.session.messages: ', ctx.session.messages);
         const response = await ai.chat(ctx.session.messages);
-        console.info('response: ', response);
-        await ctx.reply(code(JSON.stringify(response)));
+
         ctx.session.messages.push({
             role: ai.roles.ASSISTENT,
             content: response.content
         });
-        await ctx.reply('Відповідь' + response.content);
+
+        await ctx.reply('Відповідь: ' + response.content.trim()); // print answer
     } catch (error) {
-        await ctx.reply(code('Voice Bot Error: ' + error.message));
+        console.warn('Voice Bot Error: ', error.message); // print error
     }
 });
 
