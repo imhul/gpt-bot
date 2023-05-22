@@ -35,11 +35,12 @@ bot.on(message('text'), async ctx => {
         const response = await ai.chat(ctx.session.messages);
         ctx.session.messages.push({
             role: ai.roles.ASSISTENT,
-            content: response.content
+            content: response
         });
-        ctx.reply(response.content);
+        await ctx.reply('Відповідь: ' + response.trim()); // print answer
     } catch (error) {
-        ctx.reply('Text Bot Error: ' + error.message);
+        await ctx.reply('Виникла несподівана помилка. Почніть новий чат, натиснувши в меню "start"'); // print answer
+        console.warn('Voice Bot Error: ', error.message); // print error
     }
 });
 
@@ -70,7 +71,7 @@ bot.on(message('voice'), async ctx => {
     } catch (error) {
         await ctx.reply('Виникла несподівана помилка. Почніть новий чат, натиснувши в меню "start"'); // print answer
         console.warn('Voice Bot Error: ', error.message); // print error
-        
+
     }
 });
 
