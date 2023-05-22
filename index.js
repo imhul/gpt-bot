@@ -52,9 +52,11 @@ bot.on(message('voice'), async ctx => {
             ctx.message.voice.file_id
         );
         const userID = String(ctx.message.from.id);
-        // console.info('userID: ', userID);
+        console.info('userID: ', userID);
         const oggPath = await ogg.convert(fileLink.href, userID);
+        console.info('oggPath: ', oggPath);
         const mp3path = await ogg.toMp3(oggPath, userID);
+        console.info('mp3path: ', mp3path);
         const text = await ai.voiceReader(mp3path);
         console.info('text: ', text);
         await ctx.reply('question: ' + code(text)); // question
