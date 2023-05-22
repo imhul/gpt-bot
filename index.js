@@ -28,6 +28,7 @@ bot.on(message('text'), async ctx => {
 
     try {
         await ctx.reply(code('Дай но подумать...'));
+        if (ctx.session.messages.length > 16) ctx.session.messages.shift();
         ctx.session.messages.push({
             role: ai.roles.USER,
             content: ctx.message.text
@@ -59,6 +60,7 @@ bot.on(message('voice'), async ctx => {
         const text = await ai.voiceReader(mp3path);
         await ctx.reply(code('Ще трохи...'));
         // await ctx.reply(code(`Ваше запитання: ${text}`)); // print question
+        if (ctx.session.messages.length > 16) ctx.session.messages.shift();
         ctx.session.messages.push({ role: ai.roles.USER, content: text });
         const response = await ai.chat(ctx.session.messages);
 
