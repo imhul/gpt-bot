@@ -37,7 +37,7 @@ bot.on(message('text'), async ctx => {
             role: ai.roles.ASSISTENT,
             content: response
         });
-        await ctx.reply('Відповідь: ' + response.trim()); // print answer
+        await ctx.reply('Відповідь: ' + response); // print answer
     } catch (error) {
         await ctx.reply('Виникла несподівана помилка. Почніть новий чат, натиснувши в меню "start"'); // print answer
         console.warn('Voice Bot Error: ', error.message); // print error
@@ -67,7 +67,7 @@ bot.on(message('voice'), async ctx => {
             content: response
         });
 
-        await ctx.reply('Відповідь: ' + response.trim()); // print answer
+        await ctx.reply('Відповідь: ' + response); // print answer
     } catch (error) {
         await ctx.reply('Виникла несподівана помилка. Почніть новий чат, натиснувши в меню "start"'); // print answer
         console.warn('Voice Bot Error: ', error.message); // print error
