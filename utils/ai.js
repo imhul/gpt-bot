@@ -1,6 +1,8 @@
 import { Configuration, OpenAIApi } from 'openai';
 import { createReadStream } from 'fs';
 
+const gptKey = process.env.HEROKU_BOT_KEY;
+
 class AI {
     roles = {
         ASSISTENT: 'assistent',
@@ -10,7 +12,7 @@ class AI {
 
     constructor() {
         const configuration = new Configuration({
-            apiKey: ''
+            apiKey: gptKey
         });
         this.openai = new OpenAIApi(configuration);
     }

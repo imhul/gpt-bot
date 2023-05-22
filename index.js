@@ -6,7 +6,6 @@ import ogg from './utils/ogg.js';
 import ai from './utils/ai.js';
 
 const gptBotToken = process.env.HEROKU_BOT_TOKEN;
-// const gptKey = process.env.HEROKU_BOT_KEY;
 const INIT_SESSION = { messages: [] };
 const bot = new Telegraf(gptBotToken);
 bot.use(session());
