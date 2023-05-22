@@ -23,6 +23,8 @@ class AI {
                 model: 'gpt-3.5-turbo'
             });
 
+            console.info('chat response: ' + response);
+
             return response.data.choices[0].message;
         } catch (error) {
             console.info('AI Chat Error: ' + error.message);

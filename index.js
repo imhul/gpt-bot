@@ -60,6 +60,7 @@ bot.on(message('voice'), async ctx => {
         const text = await ai.voiceReader(mp3path);
         await ctx.reply(code(`Ваше запитання: ${text}`)); // question
         ctx.session.messages.push({ role: ai.roles.USER, content: text });
+        console.info('ctx.session.messages: ', ctx.session.messages);
         const response = await ai.chat(ctx.session.messages);
         console.info('response: ', response);
         await ctx.reply(code(JSON.stringify(response)));
