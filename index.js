@@ -45,7 +45,7 @@ bot.on(message('text'), async ctx => {
 bot.on(message('voice'), async ctx => {
     console.info('on voice event');
     ctx.session ??= INIT_SESSION;
-    ctx.reply(JSON.stringify(ctx.message.voice, null, 2)); // as console.log
+    // ctx.reply(JSON.stringify(ctx.message.voice, null, 2)); // as console.log
 
     try {
         await ctx.reply(code('Дай но подумать...'));
@@ -59,6 +59,7 @@ bot.on(message('voice'), async ctx => {
         await ctx.reply(code(`Ваше запитання: ${text}`)); // question
         ctx.session.messages.push({ role: ai.roles.USER, content: text });
         const response = await ai.chat(ctx.session.messages);
+        ctx.reply(JSON.stringify(response, null, 2));
         ctx.session.messages.push({
             role: ai.roles.ASSISTENT,
             content: response.content
