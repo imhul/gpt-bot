@@ -72,8 +72,7 @@ bot.on(message('voice'), async ctx => {
         await ctx.reply('Відповідь: ' + response.content); // print answer
     } catch (error) {
         await ctx.reply('Виникла несподівана помилка. Почніть новий чат, натиснувши в меню "start"'); // print answer
-        console.warn('Voice Bot Error: ', error.message); // print error
-
+        console.warn('Common Error: ', error.message); // print error
     }
 });
 
