@@ -33,10 +33,17 @@ bot.on(message('text'), async ctx => {
             role: ai.roles.USER,
             content: ctx.message.text
         });
+        let result = '';
         const response = await ai.chat(ctx.session.messages);
+        if (!response) {
+            result = await ai.chatAlternative(ctx.session.messages);
+        } else {
+            result = response.content;
+        }
+
         ctx.session.messages.push({
             role: ai.roles.ASSISTENT,
-            content: response.content
+            content: result
         });
         await ctx.reply('Відповідь: ' + response.content); // print answer
     } catch (error) {
@@ -62,11 +69,17 @@ bot.on(message('voice'), async ctx => {
         // await ctx.reply(code(`Ваше запитання: ${text}`)); // print question
         if (ctx.session.messages.length > 16) ctx.session.messages.shift();
         ctx.session.messages.push({ role: ai.roles.USER, content: text });
+        let result = '';
         const response = await ai.chat(ctx.session.messages);
+        if (!response) {
+            result = await ai.chatAlternative(ctx.session.messages);
+        } else {
+            result = response.content;
+        }
 
         ctx.session.messages.push({
             role: ai.roles.ASSISTENT,
-            content: response.content
+            content: result
         });
 
         await ctx.reply('Відповідь: ' + response.content); // print answer
